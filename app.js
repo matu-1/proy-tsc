@@ -10,12 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var page = 0;
 var cantidad = 20;
-const URLp = `https://pokeapi.co/api/v2/pokemon?limit=${cantidad}&offset=${cantidad * page}`;
 const URLimg = "https://pokeres.bastionbot.org/images/pokemon/";
 const pokemonDiv = document.getElementById("pokemonContainer");
 function getPokemons() {
     return __awaiter(this, void 0, void 0, function* () {
-        const data = yield fetch(URLp).then((resp) => resp.json());
+        const data = yield fetch(getUrl()).then((resp) => resp.json());
         return data.results;
     });
 }
@@ -25,6 +24,9 @@ function getId(url) {
 }
 function pokemonBuild() {
     return __awaiter(this, void 0, void 0, function* () {
+        const lastChild = pokemonDiv === null || pokemonDiv === void 0 ? void 0 : pokemonDiv.childNodes.item((pokemonDiv === null || pokemonDiv === void 0 ? void 0 : pokemonDiv.childNodes.length) - 1);
+        if ((lastChild === null || lastChild === void 0 ? void 0 : lastChild.nodeName) == "BUTTON")
+            lastChild.remove();
         const pokemones = yield getPokemons();
         for (const pokemon of pokemones) {
             const id = getId(pokemon.url);
@@ -44,16 +46,27 @@ function pokemonBuild() {
             pokemonDiv === null || pokemonDiv === void 0 ? void 0 : pokemonDiv.append(div);
         }
         page++;
+        const button = document.createElement("button");
+        button.innerHTML = "CARGAR MAS";
+        button.classList.add("btn-block");
+        button.onclick = cargarMas;
+        pokemonDiv === null || pokemonDiv === void 0 ? void 0 : pokemonDiv.append(button);
     });
 }
 function cargarMas() {
     return __awaiter(this, void 0, void 0, function* () {
         yield pokemonBuild();
-        console.log('window.pageYOffset', window.pageYOffset);
+        console.log("window.pageYOffset", window.pageYOffset);
         window.scroll({
             top: window.pageYOffset + 500,
-            behavior: 'smooth'
+            behavior: "smooth",
         });
     });
+}
+function goScrollEnd() {
+    pokemonDiv === null || pokemonDiv === void 0 ? void 0 : pokemonDiv.scrollIntoView({ block: "end", behavior: "smooth" });
+}
+function getUrl() {
+    return `https://pokeapi.co/api/v2/pokemon?limit=${cantidad}&offset=${cantidad * page}`;
 }
 pokemonBuild();

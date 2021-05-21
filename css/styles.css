@@ -19,7 +19,7 @@ body {
   box-shadow: 0 0 3px black;
 }
 .pokemon:hover {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 .floating-button {
   width: 70px;
@@ -36,4 +36,20 @@ body {
   position: fixed;
   bottom: 50px;
   right: 50px;
+}
+.btn-block {
+  background-color: white;
+  height: 80px;
+  width: 100%;
+  font-size: 20px;
+  color: black;
+  border-radius: 35px;
+  outline: none;
+  border: none;
+  box-shadow: 1px 1px 3px black;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+.btn-block:hover {
+  opacity: 0.5;
 }

@@ -1,8 +1,5 @@
 var page = 0;
 var cantidad = 20;
-const URLp = `https://pokeapi.co/api/v2/pokemon?limit=${cantidad}&offset=${
-  cantidad * page
-}`;
 const URLimg = "https://pokeres.bastionbot.org/images/pokemon/";
 const pokemonDiv = document.getElementById("pokemonContainer");
 
@@ -12,7 +9,7 @@ type Pokemon = {
 };
 
 async function getPokemons() {
-  const data = await fetch(URLp).then((resp) => resp.json());
+  const data = await fetch(getUrl()).then((resp) => resp.json());
   return <Pokemon[]>data.results;
 }
 
@@ -22,6 +19,10 @@ function getId(url: string) {
 }
 
 async function pokemonBuild() {
+  const lastChild = pokemonDiv?.childNodes.item(
+    pokemonDiv?.childNodes.length - 1
+  );
+  if (lastChild?.nodeName == "BUTTON") lastChild.remove();
   const pokemones = await getPokemons();
   for (const pokemon of pokemones) {
     const id = getId(pokemon.url);
@@ -41,15 +42,30 @@ async function pokemonBuild() {
     pokemonDiv?.append(div);
   }
   page++;
+  const button = document.createElement("button");
+  button.innerHTML = "CARGAR MAS";
+  button.classList.add("btn-block");
+  button.onclick = cargarMas;
+  pokemonDiv?.append(button);
 }
 
 async function cargarMas() {
   await pokemonBuild();
-  console.log('window.pageYOffset', window.pageYOffset);
+  console.log("window.pageYOffset", window.pageYOffset);
   window.scroll({
-      top: window.pageYOffset + 500,
-      behavior: 'smooth'
+    top: window.pageYOffset + 500,
+    behavior: "smooth",
   });
+}
+
+function goScrollEnd() {
+  pokemonDiv?.scrollIntoView({ block: "end", behavior: "smooth" });
+}
+
+function getUrl() {
+  return `https://pokeapi.co/api/v2/pokemon?limit=${cantidad}&offset=${
+    cantidad * page
+  }`;
 }
 
 pokemonBuild();
