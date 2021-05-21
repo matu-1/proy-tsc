@@ -43,8 +43,13 @@ async function pokemonBuild() {
   page++;
 }
 
-function cargarMas() {
-  pokemonBuild();
+async function cargarMas() {
+  await pokemonBuild();
+  console.log('window.pageYOffset', window.pageYOffset);
+  window.scroll({
+      top: window.pageYOffset + 500,
+      behavior: 'smooth'
+  });
 }
 
 pokemonBuild();

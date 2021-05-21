@@ -47,6 +47,13 @@ function pokemonBuild() {
     });
 }
 function cargarMas() {
-    pokemonBuild();
+    return __awaiter(this, void 0, void 0, function* () {
+        yield pokemonBuild();
+        console.log('window.pageYOffset', window.pageYOffset);
+        window.scroll({
+            top: window.pageYOffset + 500,
+            behavior: 'smooth'
+        });
+    });
 }
 pokemonBuild();
