@@ -1,0 +1,39 @@
+* {
+  font-family: "Raleway", sans-serif;
+}
+body {
+  background-color: #f2f2f2;
+}
+.container {
+  width: 95%;
+  max-width: 1000px;
+  margin: auto;
+}
+.pokemon {
+  box-sizing: border-box;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 10px;
+  transition: all 0.3s;
+  background-color: white;
+  box-shadow: 0 0 3px black;
+}
+.pokemon:hover {
+    opacity: 0.5;
+}
+.floating-button {
+  width: 70px;
+  height: 70px;
+  background-color: white;
+  color: white;
+  border-radius: 35px;
+  outline: none;
+  border: none;
+  box-shadow: 1px 1px 3px black;
+  font-weight: bold;
+}
+.floating {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+}
